@@ -16,6 +16,9 @@
 #include<QTextStream>
 #include<QMimeData>
 
+#include<QTimer>
+#include<QTime>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -68,6 +71,14 @@ MainWindow::MainWindow(QWidget *parent) :
     id1=startTimer(1000);
     id2=startTimer(1500);
     id3=startTimer(2200);
+
+    QTimer *timer=new QTimer(this);//创建一个新的定时器
+    connect(timer,&QTimer::timeout,this,&MainWindow::timerUpdate);
+    timer->start(1000);// 设置溢出时间为1s，并启动定时器
+
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+
+    QTimer::singleShot(10000,this,&MainWindow::close);//自动关闭 函数运行10s
 }
 
 void MainWindow::showTextFrame(){
@@ -186,16 +197,24 @@ void MainWindow::dropEvent(QDropEvent *event){// 放下事件
 
 void MainWindow::timerEvent(QTimerEvent *event){
     if(event->timerId()==id1){
-        qDebug()<<"timer 1";
+//        qDebug()<<"timer 1";
     }else if(event->timerId()==id2){
-        qDebug()<<"timer 2";
+//        qDebug()<<"timer 2";
     }else if(event->timerId()==id3){
-        qDebug()<<"timer 3";
+//        qDebug()<<"timer 3";
     }else{}
 }
 
-void MainWindow::timerUpdate(){
+void MainWindow::timerUpdate(){//定时器溢出处理
+    QTime time=QTime::currentTime();
+    QString text=time.toString("hh:mm:ss");
+//    qDebug()<<text.length();
+    if((time.second()%2)==0){text[2]=' ';text[5]=' ';}// 每隔一秒就将“:”显示为空格
+    ui->lcdNumber->display(text);
 
+    int rand=qrand()%300;
+    text=QString::number(rand);
+    ui->randLcdNumber->display(text);
 }
 
 MainWindow::~MainWindow()

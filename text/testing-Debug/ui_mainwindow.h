@@ -28,6 +28,7 @@ public:
     QTextEdit *textEdit;
     QTextEdit *dragtextEdit;
     QLCDNumber *lcdNumber;
+    QLCDNumber *randLcdNumber;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -37,6 +38,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(389, 447);
+        MainWindow->setLayoutDirection(Qt::LeftToRight);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         textEdit = new QTextEdit(centralWidget);
@@ -47,7 +49,18 @@ public:
         dragtextEdit->setGeometry(QRect(160, 0, 221, 211));
         lcdNumber = new QLCDNumber(centralWidget);
         lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
-        lcdNumber->setGeometry(QRect(13, 240, 141, 23));
+        lcdNumber->setGeometry(QRect(20, 230, 141, 23));
+        lcdNumber->setLayoutDirection(Qt::LeftToRight);
+        lcdNumber->setDigitCount(8);
+        lcdNumber->setMode(QLCDNumber::Bin);
+        lcdNumber->setSegmentStyle(QLCDNumber::Flat);
+        randLcdNumber = new QLCDNumber(centralWidget);
+        randLcdNumber->setObjectName(QString::fromUtf8("randLcdNumber"));
+        randLcdNumber->setGeometry(QRect(20, 260, 141, 23));
+        randLcdNumber->setLayoutDirection(Qt::LeftToRight);
+        randLcdNumber->setDigitCount(8);
+        randLcdNumber->setMode(QLCDNumber::Bin);
+        randLcdNumber->setSegmentStyle(QLCDNumber::Flat);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));

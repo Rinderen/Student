@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        widget.cpp
+        widget.cpp \
+    drawview.cpp
 
 HEADERS += \
-        widget.h
+        widget.h \
+    drawview.h
 
 FORMS += \
         widget.ui
